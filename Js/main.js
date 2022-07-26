@@ -10,28 +10,37 @@
                }
                alert("Nos quedamos sin cupo de preventa. Te avisaremos por email la próxima fecha." + "\nGracias por elegirnos.")
 
+               /* CREANEDO PRODUCTOS */
+               class Producto {                        //FUNCION QUE CREA NUEVOS OBJETOS PUEDE SER FUNCTION O CLASS
+                   constructor(nombre, precio, stock) {
+                       this.nombre = nombre
+                       this.precio = parseFloat(precio)
+                       this.stock = stock
+                   }
+               }
 
-               /* LISTA DE PRODUCTOS */
+               /*OBJETO NUEVO A PARTIR DE FUNCION CONSTRUCTORA O CLASE*/
+               const producto1 = new Producto("Mat", 10000, 20);
+               const producto2 = new Producto("Cubos", 2000, 15);
+               const producto3 = new Producto("Cintos", 1500, 15);
+               const producto4 = new Producto("Zafu", 3500, 10);
 
-               let producto1 = "Mat";
-               let precioProducto1 = 10000;
-               let stockProducto1 = 20;
+               let listaDeProductos = [producto1, producto2, producto3, producto4]
 
-               let producto2 = "Cubos";
-               let precioProducto2 = 2000;
-               let stockProducto2 = 15;
+               let nombreDeProductos = []
 
-               let producto3 = "Cintos";
-               let precioProducto3 = 1500;
-               let stockProducto3 = 15;
+               function enlistarProductos() {
+                   for (let producto of listaDeProductos) {
+                       nombreDeProductos.push(producto.nombre)
+                   }
+               }
 
-               let producto4 = "Zafu";
-               let precioProducto4 = 3500;
-               let stockProducto4 = 10;
+               enlistarProductos() //CON ESTA FUNCION LE AGREGO A nombreDeProductos sus nombres en un array
+
 
                /* COMPRA DE PRODUCTOS */
 
-               let comprarMas = prompt("Ingrese la cantidad de productos distintos que desea comprar: \n Mat\n Cubos\n Cintos\n Zafu")
+               let comprarMas = prompt("Ingrese la cantidad de productos distintos que desea comprar: \n- " + nombreDeProductos.join("\n- "))
                let precioFinal = 0;
 
                function precioUnitario(cantidad, precio) {
@@ -47,23 +56,22 @@
                    }
                }
 
+               for (let i = 0; i < comprarMas; i++) { //AGREGO +1 PRODUCTO
 
-               for (let i = 0; i < comprarMas; i++) {
-
-                   let compra = prompt("Ingrese el nombre del producto que desea: \n- Mat\n- Cubos\n- Cintos\n- Zafu");
+                   let compra = prompt("Ingrese el nombre del producto que desea: \n- " + nombreDeProductos.join("\n- "));
                    let cantidad = parseInt(prompt("¿Cuántos " + compra + " quiere comprar?:"));
 
-                   if ((compra == "Mat") || (compra == "mat") || (compra == "MAT")) {
-                       compraProducto(stockProducto1, precioProducto1, cantidad)
+                   if (compra == producto1.nombre.toLowerCase()) {
+                       compraProducto(producto1.stock, producto1.precio, cantidad)
 
-                   } else if ((compra == "Cubos") || (compra == "cubos") || (compra == "CUBOS")) {
-                       compraProducto(stockProducto2, precioProducto2, cantidad)
+                   } else if (compra == producto2.nombre.toLowerCase()) {
+                       compraProducto(producto2.stock, producto2.precio, cantidad)
 
-                   } else if ((compra == "Cintos") || (compra == "cintos") || (compra == "CINTOS")) {
-                       compraProducto(stockProducto3, precioProducto3, cantidad)
+                   } else if (compra == producto3.nombre.toLowerCase()) {
+                       compraProducto(producto3.stock, producto3.precio, cantidad)
 
-                   } else if ((compra == "Zafu") || (compra == "zafu") || (compra == "ZAFU")) {
-                       compraProducto(stockProducto4, precioProducto4, cantidad)
+                   } else if (compra == producto4.nombre.toLowerCase()) {
+                       compraProducto(producto4.stock, producto4.precio, cantidad)
 
                    } else {
                        alert("No tenemos el producto solicitado.")
@@ -93,8 +101,8 @@
 
                /* ENVIOS */
 
-               let envios = prompt("¿Desea envío o retiro por local Patio Olmos?\n- Envío\n- Retiro")
-               if ((envios == "Envio") || (envios == "envio") || (envios == ENVIO)) {
+               let envios = prompt("¿Desea envío o retiro por local Patio Olmos?\n- Envío\n- Retiro").toLowerCase()
+               if (envios == "envio") {
                    prompt("Ingrese su dirección:")
                    precioFinal += 500;
                    alert("Tu pedido llegará en 48 horas hábiles.")
@@ -105,24 +113,3 @@
 
 
 
-               /*  if ((nombre != " ") || (apellido != " "))
-                do{
-                 alert("Bienvenido a nuestra tienda " + nombre + " " + apellido + "." + "\n Su puesto para la preventa es el número: " + i)
-                } while ( nombre + apellido) */
-
-               /* COMPRA DE PRODUCTOS */
-
-               /*  function producto1 (producto, precio, stock) {
-                    this.producto = producto
-                    this.precio = precio
-                    this.stock = stock
-                    this.sumarIva = function (){
-                        return this.precio * 1.21
-                    }
-                    this.sumarStock = function (cantidad){this.stock * }
-               } 
-               
-               class producto {
-               }
-                             
-               */
