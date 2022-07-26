@@ -1,17 +1,14 @@
                /* INGRESO Y PUESTO EN PREVENTA */
 
-               for (let i = 1; i < 3; i++) {
-                   if (i == 2) {
-                       alert("Sólo queda un lugar para la preventa!")
-                   }
-                   let nombre = prompt("Ingrese su nombre:")
-                   let apellido = prompt("Ingrese su apellido:")
-                   alert("Bienvenido a nuestra tienda " + nombre + " " + apellido + ". " + "\n Su puesto para la preventa es el número: " + i)
-               }
-               alert("Nos quedamos sin cupo de preventa. Te avisaremos por email la próxima fecha." + "\nGracias por elegirnos.")
+               alert("Bienvenid@!  \nSólo queda un lugar para la preventa de Objetos Personalizados!")
 
-               /* CREANEDO PRODUCTOS */
-               class Producto {                        //FUNCION QUE CREA NUEVOS OBJETOS PUEDE SER FUNCTION O CLASS
+               let nombre = prompt("Ingrese su nombre:")
+               let apellido = prompt("Ingrese su apellido:")
+               alert("Bienvenido a nuestra tienda " + nombre + " " + apellido + ". " + "\n Su puesto para la preventa es el número: 1" )
+
+
+               /* CREANDO PRODUCTOS */
+               class Producto { //FUNCION QUE CREA NUEVOS OBJETOS PUEDE SER FUNCTION O CLASS
                    constructor(nombre, precio, stock) {
                        this.nombre = nombre
                        this.precio = parseFloat(precio)
@@ -58,7 +55,7 @@
 
                for (let i = 0; i < comprarMas; i++) { //AGREGO +1 PRODUCTO
 
-                   let compra = prompt("Ingrese el nombre del producto que desea: \n- " + nombreDeProductos.join("\n- "));
+                   let compra = prompt("Ingrese el nombre del producto que desea: \n- " + nombreDeProductos.join("\n- ")).toLowerCase();
                    let cantidad = parseInt(prompt("¿Cuántos " + compra + " quiere comprar?:"));
 
                    if (compra == producto1.nombre.toLowerCase()) {
@@ -110,6 +107,3 @@
                    alert("Retira tu compra a partir de mañana por Patio Olmos Shopping, local 33.")
                }
                alert("El precio final de tu compra, con la entrega elegida, es de $" + precioFinal + ".")
-
-
-
