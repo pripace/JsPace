@@ -4,7 +4,7 @@
 
                let nombre = prompt("Ingrese su nombre:")
                let apellido = prompt("Ingrese su apellido:")
-               alert("Bienvenido a nuestra tienda " + nombre + " " + apellido + ". " + "\n Su puesto para la preventa es el número: 1" )
+               alert("Bienvenido a nuestra tienda " + nombre + " " + apellido + ". " + "\n Su puesto para la preventa es el número: 1")
 
 
                /* CREANDO PRODUCTOS */
@@ -24,15 +24,7 @@
 
                let listaDeProductos = [producto1, producto2, producto3, producto4]
 
-               let nombreDeProductos = []
-
-               function enlistarProductos() {
-                   for (let producto of listaDeProductos) {
-                       nombreDeProductos.push(producto.nombre)
-                   }
-               }
-
-               enlistarProductos() //CON ESTA FUNCION LE AGREGO A nombreDeProductos sus nombres en un array
+               let nombreDeProductos = listaDeProductos.map((producto) => producto.nombre) //USO MAP EN VEZ DE UNA FUNCION ENTERA
 
 
                /* COMPRA DE PRODUCTOS */
@@ -40,18 +32,16 @@
                let comprarMas = prompt("Ingrese la cantidad de productos distintos que desea comprar: \n- " + nombreDeProductos.join("\n- "))
                let precioFinal = 0;
 
-               function precioUnitario(cantidad, precio) {
-                   precioFinal += precio * cantidad;
-               }
 
                function compraProducto(stock, precio, cantidad) {
-                   if (cantidad <= stock) {
-                       precioUnitario(precio, cantidad);
+                   if ((cantidad <= stock) && (cantidad > 0)) {
+                       precioFinal += precio * cantidad; //UNIFIQUE ESTA FUNCION AQUI DENTRO YA QUE SOLO LA USABA ACA
                        alert("El valor de su compra es de $" + (precio * cantidad))
                    } else {
                        alert("No disponemos de esa cantidad. El stock disponible es de " + stock + ".")
                    }
                }
+
 
                for (let i = 0; i < comprarMas; i++) { //AGREGO +1 PRODUCTO
 
@@ -86,7 +76,7 @@
                        precioFinal = precioFinal * 0.85
                        alert("Accediste a un 15% de descuento!")
                        break;
-                   case precioFinal > 10000:
+                   case precioFinal >= 10000:
                        precioFinal = precioFinal * 0.80
                        alert("Accediste a un 20% de descuento!")
                        break;
@@ -99,11 +89,12 @@
                /* ENVIOS */
 
                let envios = prompt("¿Desea envío o retiro por local Patio Olmos?\n- Envío\n- Retiro").toLowerCase()
+               let fechaCompra = new Date()
                if (envios == "envio") {
                    prompt("Ingrese su dirección:")
                    precioFinal += 500;
-                   alert("Tu pedido llegará en 48 horas hábiles.")
+                   alert("Tu pedido llegará en 48 horas hábiles. Compra efectuada:" + fechaCompra)
                } else {
-                   alert("Retira tu compra a partir de mañana por Patio Olmos Shopping, local 33.")
+                   alert("Retira tu compra a partir de mañana por Patio Olmos Shopping, local 33. Compra efectuada:" + fechaCompra.toLocaleString())
                }
                alert("El precio final de tu compra, con la entrega elegida, es de $" + precioFinal + ".")
