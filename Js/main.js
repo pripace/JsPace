@@ -33,7 +33,7 @@
                                      <p>$ ${producto.precio}</p>
                                      <p>Quedan dispnibles: ${producto.stock} unidades.</p>`
 
-                       document.main.append(card)
+                       document.body.append(card)
                    }
                }
 
