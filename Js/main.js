@@ -4,8 +4,7 @@
 
                let nombre = prompt("Ingrese su nombre:")
                let apellido = prompt("Ingrese su apellido:")
-               alert("Bienvenido a nuestra tienda " + nombre + " " + apellido + ". " + "\n Su puesto para la preventa es el número: 1")
-
+               alert(`Bienvenido a nuestra tienda ${nombre} ${apellido}. \n Su puesto para la preventa es el número: 1`)
 
                /* CREANDO PRODUCTOS */
                class Producto { //FUNCION QUE CREA NUEVOS OBJETOS PUEDE SER FUNCTION O CLASS
@@ -24,6 +23,20 @@
 
                let listaDeProductos = [producto1, producto2, producto3, producto4]
 
+               for (const producto of listaDeProductos) {
+
+                   if (producto.stock > 0) {
+
+                       let card = document.createElement("div")
+
+                       card.innerHTML = `<h3>${producto.nombre}</h3>
+                                     <p>$ ${producto.precio}</p>
+                                     <p>Quedan dispnibles: ${producto.stock} unidades.</p>`
+
+                       document.main.append(card)
+                   }
+               }
+
                let nombreDeProductos = listaDeProductos.map((producto) => producto.nombre) //USO MAP EN VEZ DE UNA FUNCION ENTERA
 
 
@@ -38,7 +51,7 @@
                        precioFinal += precio * cantidad; //UNIFIQUE ESTA FUNCION AQUI DENTRO YA QUE SOLO LA USABA ACA
                        alert("El valor de su compra es de $" + (precio * cantidad))
                    } else {
-                       alert("No disponemos de esa cantidad. El stock disponible es de " + stock + ".")
+                       alert(`No disponemos de esa cantidad. El stock disponible es de ${stock} unidades.`)
                    }
                }
 
@@ -98,3 +111,19 @@
                    alert("Retira tu compra a partir de mañana por Patio Olmos Shopping, local 33. Compra efectuada:" + fechaCompra.toLocaleString())
                }
                alert("El precio final de tu compra, con la entrega elegida, es de $" + precioFinal + ".")
+
+               //DOM
+
+               let titulo = document.getElementById("titulo")
+
+               console.log(titulo)
+
+               titulo.innerText = "Tienda Online de Yoga y Vida" //CAMBIO EL TITULO
+
+               let nuevoProducto = document.createElement("li") //AGREGO ELEMENTO. QUEDA SOLO VISIBLE EN PAG YA QUE NO LE AGREGUE PROPIEDADES
+
+               nuevoProducto.innerText = "Manta"
+
+               let lista = document.getElementById("lista")
+
+               lista.append(nuevoProducto)
