@@ -21,7 +21,7 @@
                const producto3 = new Producto("Cintos", 1500, 15);
                const producto4 = new Producto("Zafu", 3500, 10);
                const producto5 = new Producto("Esfera", 8400, 2);
-               const producto6 = new Producto("Kit Relax", 2500, 4);
+               const producto6 = new Producto("KitRelax", 2500, 4);
 
 
                let listaDeProductos = [producto1, producto2, producto3, producto4, producto5, producto6]
@@ -34,7 +34,7 @@
 
                        card.innerHTML = `<h3>${producto.nombre}</h3>
                                      <p>$ ${producto.precio}</p>
-                                     <p>Quedan dispnibles: ${producto.stock} unidades.</p>`
+                                     <p>Quedan disponibles ${producto.stock} unidades.</p>`
 
                        document.body.append(card)
                    }
@@ -127,11 +127,3 @@
                console.log(titulo)
 
                titulo.innerText = "Tienda Online de Yoga y Vida" //CAMBIO EL TITULO
-
-               let nuevoProducto = document.createElement("li") //AGREGO ELEMENTO. QUEDA SOLO VISIBLE EN PAG YA QUE NO LE AGREGUE PROPIEDADES
-
-               nuevoProducto.innerText = "Manta"
-
-               let lista = document.getElementById("lista")
-
-               lista.append(nuevoProducto)

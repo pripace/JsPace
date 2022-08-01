@@ -69,3 +69,11 @@ function compraProducto(stock, precio, cantidad) {
 } */
 
 
+let nuevoProducto = document.createElement("li") //AGREGO ELEMENTO. QUEDA SOLO VISIBLE EN PAG YA QUE NO LE AGREGUE PROPIEDADES
+
+nuevoProducto.innerText = "Manta"
+
+let lista = document.getElementById("lista")
+
+lista.append(nuevoProducto)
+
