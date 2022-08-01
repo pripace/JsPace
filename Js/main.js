@@ -20,10 +20,13 @@
                const producto2 = new Producto("Cubos", 2000, 15);
                const producto3 = new Producto("Cintos", 1500, 15);
                const producto4 = new Producto("Zafu", 3500, 10);
+               const producto5 = new Producto("Esfera", 8400, 2);
+               const producto6 = new Producto("Kit Relax", 2500, 4);
 
-               let listaDeProductos = [producto1, producto2, producto3, producto4]
 
-               for (const producto of listaDeProductos) {
+               let listaDeProductos = [producto1, producto2, producto3, producto4, producto5, producto6]
+
+               for (const producto of listaDeProductos) {  //INCLUYO CARD Y MUESTRO POR PANTALLA PRINCIPAL
 
                    if (producto.stock > 0) {
 
@@ -73,6 +76,11 @@
                    } else if (compra == producto4.nombre.toLowerCase()) {
                        compraProducto(producto4.stock, producto4.precio, cantidad)
 
+                   } else if (compra == producto5.nombre.toLowerCase()) {
+                       compraProducto(producto5.stock, producto5.precio, cantidad)
+
+                   } else if (compra == producto6.nombre.toLowerCase()) {
+                       compraProducto(producto6.stock, producto6.precio, cantidad)
                    } else {
                        alert("No tenemos el producto solicitado.")
                    }
