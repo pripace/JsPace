@@ -1,129 +1,211 @@
-               /* INGRESO Y PUESTO EN PREVENTA */
+document.addEventListener('DOMContentLoaded', () => {
 
-               alert("Bienvenid@!  \nSólo queda un lugar para la preventa de Objetos Personalizados!")
+    // Variables
 
-               let nombre = prompt("Ingrese su nombre:")
-               let apellido = prompt("Ingrese su apellido:")
-               alert(`Bienvenido a nuestra tienda ${nombre} ${apellido}. \n Su puesto para la preventa es el número: 1`)
+    //let baseDeDatos = [];
 
-               /* CREANDO PRODUCTOS */
-               class Producto { //FUNCION QUE CREA NUEVOS OBJETOS PUEDE SER FUNCTION O CLASS
-                   constructor(nombre, precio, stock) {
-                       this.nombre = nombre
-                       this.precio = parseFloat(precio)
-                       this.stock = stock
-                   }
-               }
+    let carrito = [];
+    const DOMitems = document.getElementById('items');
+    const DOMcarrito = document.querySelector('#carrito');
+    const DOMtotal = document.querySelector('#total');
+    const DOMbotonVaciar = document.querySelector('#boton-vaciar');
 
-               /*OBJETO NUEVO A PARTIR DE FUNCION CONSTRUCTORA O CLASE*/
-               const producto1 = new Producto("Mat", 10000, 20);
-               const producto2 = new Producto("Cubos", 2000, 15);
-               const producto3 = new Producto("Cintos", 1500, 15);
-               const producto4 = new Producto("Zafu", 3500, 10);
-               const producto5 = new Producto("Esfera", 8400, 2);
-               const producto6 = new Producto("KitRelax", 2500, 4);
+    const listaDeProductos = [
+        {
+            id: 1,
+            nombre: "Mat",
+            precio: 10000,
+            stock: 30
+        },
+        {
+            id: 2,
+            nombre: "Cubos",
+            precio: 2000,
+            stock: 15
+        },
+        {
+            id: 3,
+            nombre: "Cintos",
+            precio: 1500,
+            stock: 15,
+        },
+        {
+            id: 4,
+            nombre: "Zafu",
+            precio: 3500,
+            stock: 10
+        },
+        {
+            id: 5,
+            nombre: "Esfera",
+            precio: 8400,
+            stock: 2
+        },
+        {
+            id: 6,
+            nombre: "Kit Relax",
+            precio: 2500,
+            stock: 3
+        }
+    ]
 
+    // Funciones
 
-               let listaDeProductos = [producto1, producto2, producto3, producto4, producto5, producto6]
+   // Dibuja todos los productos a partir de la base de datos. No confundir con el carrito
+    
+    function renderizarProductos() {
+        listaDeProductos.forEach((info) => {
+            // Estructura
+            const miNodo = document.createElement('div');
+            miNodo.classList.add('card', 'col-sm-4');
 
-               for (const producto of listaDeProductos) {  //INCLUYO CARD Y MUESTRO POR PANTALLA PRINCIPAL
+            // Body
+            const miNodoCardBody = document.createElement('div');
+            miNodoCardBody.classList.add('card-body');
 
-                   if (producto.stock > 0) {
+            // Titulo
+            const miNodoTitle = document.createElement('h5');
+            miNodoTitle.classList.add('card-title');
+            miNodoTitle.innerText = info.nombre;
 
-                       let card = document.createElement("div")
+            // Precio
+            const miNodoPrecio = document.createElement('p');
+            miNodoPrecio.classList.add('card-text');
+            miNodoPrecio.innerText = `$${info.precio}`;
 
-                       card.innerHTML = `<h3>${producto.nombre}</h3>
-                                     <p>$ ${producto.precio}</p>
-                                     <p>Quedan disponibles ${producto.stock} unidades.</p>`
+            //Stock
+            const miNodoStock = document.createElement('p');
+            miNodoStock.classList.add('card-text');
+            miNodoStock.innerText = `Stock: ${info.stock}`;
 
-                       document.body.append(card)
-                   }
-               }
+            // Boton 
+            const miNodoBoton = document.createElement('button');
+            miNodoBoton.classList.add('btn', 'btn-primary');
+            miNodoBoton.innerText = '+';
+            miNodoBoton.setAttribute('marcador', info.id);
+            miNodoBoton.addEventListener('click', anyadirProductoAlCarrito);
 
-               let nombreDeProductos = listaDeProductos.map((producto) => producto.nombre) //USO MAP EN VEZ DE UNA FUNCION ENTERA
+            // Insertamos
+            miNodoCardBody.append(miNodoTitle);
+            miNodoCardBody.append(miNodoPrecio);
+            miNodoCardBody.append(miNodoStock);
 
+            //miNodoCardBody.append(miNodoImagen)
+            miNodoCardBody.append(miNodoBoton);
+            miNodo.append(miNodoCardBody);
+            DOMitems.append(miNodo);
+        });
+    }
 
-               /* COMPRA DE PRODUCTOS */
+    /**
+    * Evento para añadir un producto al carrito de la compra
+    */
+    function anyadirProductoAlCarrito(e) {
+        // Anyadimos el Nodo a nuestro carrito
+        carrito.push(e.target.getAttribute('marcador'))
+        // Actualizamos el carrito 
+        renderizarCarrito();
+        // Actualizamos el LocalStorage
+        guardarCarritoEnLocalStorage();
+    }
 
-               let comprarMas = prompt("Ingrese la cantidad de productos distintos que desea comprar: \n- " + nombreDeProductos.join("\n- "))
-               let precioFinal = 0;
+    //Dibuja todos los productos guardados en el carrito
+    
+    function renderizarCarrito() {
+        // Vaciamos todo el html
+        DOMcarrito.innerText = '';
+        // Quitamos los duplicados
+        const carritoSinDuplicados = [...new Set(carrito)];
+        // Generamos los Nodos a partir de carrito
+        carritoSinDuplicados.forEach((item) => {
+            // Obtenemos el item que necesitamos de la variable base de datos
+            const miItem = listaDeProductos.filter((itemBaseDatos) => {
+                // ¿Coincide las id? Solo puede existir un caso
+                return itemBaseDatos.id === parseInt(item);
+            });
+            // Cuenta el número de veces que se repite el producto
+            const numeroUnidadesItem = carrito.reduce((total, itemId) => {
+                // ¿Coincide las id? Incremento el contador, en caso contrario no mantengo
+                return itemId === item ? total += 1 : total;
+            }, 0);
+            // Creamos el nodo del item del carrito
+            const miNodo = document.createElement('li');
+            miNodo.classList.add('list-group-item', 'text-right', 'mx-2');
+            miNodo.innerText = `${numeroUnidadesItem} x ${miItem[0].nombre} - $${miItem[0].precio}`;
+            // Boton de borrar
+            const miBoton = document.createElement('button');
+            miBoton.classList.add('btn', 'btn-danger', 'mx-5');
+            miBoton.innerText = 'X';
+            miBoton.style.marginLeft = '1rem';
+            miBoton.dataset.item = item;
+            miBoton.addEventListener('click', borrarItemCarrito);
+            // Mezclamos nodos
+            miNodo.appendChild(miBoton);
+            DOMcarrito.appendChild(miNodo);
+        });
+        // Renderizamos el precio total en el HTML
+        DOMtotal.innerText = calcularTotal();
+    }
 
+    //Evento para borrar un elemento del carrito
+    
+    function borrarItemCarrito(e) {
+        // Obtenemos el producto ID que hay en el boton pulsado
+        const id = e.target.dataset.item;
+        // Borramos todos los productos
+        carrito = carrito.filter((carritoId) => {
+            return carritoId !== id;
+        });
+        // volvemos a renderizar
+        renderizarCarrito();
+        // Actualizamos el LocalStorage
+        guardarCarritoEnLocalStorage();
 
-               function compraProducto(stock, precio, cantidad) {
-                   if ((cantidad <= stock) && (cantidad > 0)) {
-                       precioFinal += precio * cantidad; //UNIFIQUE ESTA FUNCION AQUI DENTRO YA QUE SOLO LA USABA ACA
-                       alert("El valor de su compra es de $" + (precio * cantidad))
-                   } else {
-                       alert(`No disponemos de esa cantidad. El stock disponible es de ${stock} unidades.`)
-                   }
-               }
+    }
 
+    //Calcula el precio total teniendo en cuenta los productos repetidos
+     
+    function calcularTotal() {
+        // Recorremos el array del carrito 
+        return carrito.reduce((total, item) => {
+            // De cada elemento obtenemos su precio
+            const miItem = listaDeProductos.filter((itemBaseDatos) => {
+                return itemBaseDatos.id === parseInt(item);
+            });
+            // Los sumamos al total
+            return total + miItem[0].precio;
+        }, 0).toFixed(2);
+    }
 
-               for (let i = 0; i < comprarMas; i++) { //AGREGO +1 PRODUCTO
+    // Vacia el carrito y vuelve a dibujarlo
+   
+    function vaciarCarrito() {
+        // Limpiamos los productos guardados
+        carrito = [];
+        // Renderizamos los cambios
+        renderizarCarrito();
+        // Borra LocalStorage
+        localStorage.removeItem('carrito');
 
-                   let compra = prompt("Ingrese el nombre del producto que desea: \n- " + nombreDeProductos.join("\n- ")).toLowerCase();
-                   let cantidad = parseInt(prompt("¿Cuántos " + compra + " quiere comprar?:"));
+    }
 
-                   if (compra == producto1.nombre.toLowerCase()) {
-                       compraProducto(producto1.stock, producto1.precio, cantidad)
+     function guardarCarritoEnLocalStorage () {
+        localStorage.setItem('carrito', JSON.stringify(carrito));
+    }
 
-                   } else if (compra == producto2.nombre.toLowerCase()) {
-                       compraProducto(producto2.stock, producto2.precio, cantidad)
+    function cargarCarritoDeLocalStorage () {
+        // ¿Existe un carrito previo guardado en LocalStorage?
+        if (localStorage.getItem('carrito') !== null) {
+            // Carga la información
+            carrito = JSON.parse(localStorage.getItem('carrito'));
+        }
+    } 
 
-                   } else if (compra == producto3.nombre.toLowerCase()) {
-                       compraProducto(producto3.stock, producto3.precio, cantidad)
+    // Eventos
+    DOMbotonVaciar.addEventListener('click', vaciarCarrito);
 
-                   } else if (compra == producto4.nombre.toLowerCase()) {
-                       compraProducto(producto4.stock, producto4.precio, cantidad)
-
-                   } else if (compra == producto5.nombre.toLowerCase()) {
-                       compraProducto(producto5.stock, producto5.precio, cantidad)
-
-                   } else if (compra == producto6.nombre.toLowerCase()) {
-                       compraProducto(producto6.stock, producto6.precio, cantidad)
-                   } else {
-                       alert("No tenemos el producto solicitado.")
-                   }
-               }
-
-               /* APLICANDO DESCUENTOS */
-
-               switch (true) {
-                   case precioFinal > 5000 && precioFinal < 6000:
-                       precioFinal = precioFinal * 0.90
-                       alert("Accediste a un 10% de descuento!")
-                       break;
-                   case precioFinal > 6000 && precioFinal < 10000:
-                       precioFinal = precioFinal * 0.85
-                       alert("Accediste a un 15% de descuento!")
-                       break;
-                   case precioFinal >= 10000:
-                       precioFinal = precioFinal * 0.80
-                       alert("Accediste a un 20% de descuento!")
-                       break;
-                   default:
-                       alert("Comprando más de $5.000 accedes a increibles descuentos!")
-                       break;
-               }
-               alert("El precio actual de tu compra es de $" + precioFinal + ".")
-
-               /* ENVIOS */
-
-               let envios = prompt("¿Desea envío o retiro por local Patio Olmos?\n- Envío\n- Retiro").toLowerCase()
-               let fechaCompra = new Date()
-               if (envios == "envio") {
-                   prompt("Ingrese su dirección:")
-                   precioFinal += 500;
-                   alert("Tu pedido llegará en 48 horas hábiles. Compra efectuada:" + fechaCompra)
-               } else {
-                   alert("Retira tu compra a partir de mañana por Patio Olmos Shopping, local 33. Compra efectuada:" + fechaCompra.toLocaleString())
-               }
-               alert("El precio final de tu compra, con la entrega elegida, es de $" + precioFinal + ".")
-
-               //DOM
-
-               let titulo = document.getElementById("titulo")
-
-               console.log(titulo)
-
-               titulo.innerText = "Tienda Online de Yoga y Vida" //CAMBIO EL TITULO
+    // Inicio
+    cargarCarritoDeLocalStorage();
+    renderizarProductos();
+    renderizarCarrito();
+});
