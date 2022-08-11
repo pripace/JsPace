@@ -11,3 +11,58 @@ body {
     flex-wrap: nowrap;
     align-items: center;
 }
+
+#titulo, h3{
+    text-align: center;
+    line-height: 30px;
+    padding: 20px 0px 10px 0px;
+    color: #4d4646;
+}
+
+.cart {
+    background-color: #f3d8c7;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8px;
+}
+
+aside{
+    margin: 10px;
+}
+
+aside h2{
+    color: #4d4646;
+}
+
+.imagen{
+    width: 200px;
+    height: 200px;
+    border-radius: 10%;
+    border: 1px double #f3d8c7;
+}
+
+footer {
+    padding: 20px;
+    margin: 2px;
+  }
+  footer .mapa, footer .redes, footer .mapa h4 {
+    padding-bottom: 5px;
+  }
+  footer .redes a {
+    color: #4d4646;
+    text-decoration: none;
+  }
+  footer .redes a img {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    margin: 5px;
+  }
+
+@media screen and (max-width: 1080px){
+    .imagen{
+        width: 100px;
+        height: 100px;
+    }
+}
