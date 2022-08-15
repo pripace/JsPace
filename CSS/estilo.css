@@ -12,7 +12,8 @@ body {
     align-items: center;
 }
 
-#titulo, h3{
+#titulo,
+h3 {
     text-align: center;
     line-height: 30px;
     padding: 20px 0px 10px 0px;
@@ -27,15 +28,15 @@ body {
     padding: 8px;
 }
 
-aside{
+aside {
     margin: 10px;
 }
 
-aside h2{
+aside h2 {
     color: #4d4646;
 }
 
-.imagen{
+.imagen {
     width: 200px;
     height: 200px;
     border-radius: 10%;
@@ -45,23 +46,28 @@ aside h2{
 footer {
     padding: 20px;
     margin: 2px;
-  }
-  footer .mapa, footer .redes, footer .mapa h4 {
+}
+
+footer .mapa,
+footer .redes,
+footer .mapa h4 {
     padding-bottom: 5px;
-  }
-  footer .redes a {
+}
+
+footer .redes a {
     color: #4d4646;
     text-decoration: none;
-  }
-  footer .redes a img {
+}
+
+footer .redes a img {
     width: 28px;
     height: 28px;
     border-radius: 50%;
     margin: 5px;
-  }
+}
 
-@media screen and (max-width: 1080px){
-    .imagen{
+@media screen and (max-width: 1080px) {
+    .imagen {
         width: 100px;
         height: 100px;
     }

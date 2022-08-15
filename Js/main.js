@@ -1,13 +1,13 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => { //carga primero html
 
-
-// Variables
+    // Variables
 
     let carrito = [];
     const items = document.getElementById('items');
     const carritoLiteral = document.getElementById('carrito');
     const precioFinal = document.getElementById('total');
     const botonVaciar = document.getElementById('boton-vaciar');
+    const botonPedir = document.getElementById("boton-comprar");
 
     const listaDeProductos = [{
             id: 1,
@@ -57,11 +57,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Dibuja  los productos a partir de la base de datos
 
-    function renderizarProductos() {   //NODOS, CREACIONES
+    function renderizarProductos() { //NODOS, CREACIONES
         listaDeProductos.forEach((info) => {
             // Estructura
             const miNodo = document.createElement('div');
-            miNodo.classList.add("card", "text-center", 'col-sm-4',"bg-light");
+            miNodo.classList.add("card", "text-center", 'col-sm-4', "bg-light");
             // Body
             const miNodoCardBody = document.createElement('div');
             miNodoCardBody.classList.add('card-body');
@@ -89,6 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
             miNodoBoton.innerText = 'Comprar';
             miNodoBoton.setAttribute('marcador', info.id); //con esto identifico a marcador con el id de cada prod
             miNodoBoton.addEventListener('click', agregarProductoAlCarrito);
+            miNodoBoton.addEventListener("click", alerta); //Sweet alert
 
             // Inserto
             miNodoCardBody.append(miNodoTitle);
@@ -110,12 +111,24 @@ document.addEventListener('DOMContentLoaded', () => {
         renderizarCarrito();
         // Actualizo LocalStorage
         guardarCarritoEnLocalStorage();
+        alerta(); //Sweet alert
+    }
+
+    const alerta = () => {
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Agregado al Carrito!',
+            showConfirmButton: true,
+            timer: 3000,
+            confirmButtonText: "Seguir Comprando"
+        })
     }
 
     //Muestro los productos guardados en el carrito
     function renderizarCarrito() {
         carritoLiteral.innerText = '';
-        // Quitamos los duplicados con Operador avanzado Spread, es para que se muestre una vez el prod independiente de la cantidad
+        // Quitamos los duplicados con Operador avanzado Spread, es para que se muestre una vez el prod independiente de la cantidad (Un valor en un Set solo puede ocurrir una vez)
         const carritoSinDuplicados = [...new Set(carrito)];
         // Generamos los Nodos a partir de carrito
         carritoSinDuplicados.forEach((item) => {
@@ -195,22 +208,47 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function cargarCarritoDeLocalStorage() {
-        // ¿Existe un carrito previo guardado en LocalStorage?
-        if (localStorage.getItem('carrito') !== null) {
-            // Carga la información
-            carrito = JSON.parse(localStorage.getItem('carrito'));
+        /*         ¿Existe un carrito previo guardado en LocalStorage?
+                     Lo carga por storage */
+        carrito = JSON.parse(localStorage.getItem('carrito')) || []; //Utilizo op logico or para recuperar carrito, en vez de if
+    }
+
+    //confirmar Compra por mail
+    const realizarPedido = ({
+        value: email
+    }) => {
+        Swal.fire({
+            title: 'Te enviaremos el Link de pago',
+            input: 'email',
+            inputLabel: 'Ingresa tu email',
+            inputPlaceholder: 'email'
+        })
+
+        if (email) {
+            Swal.fire(`Entered email: ${email}`)
         }
     }
 
     // Eventos
     botonVaciar.addEventListener('click', vaciarCarrito);
+    botonPedir.addEventListener("click", realizarPedido);
 
     // Inicio
     cargarCarritoDeLocalStorage();
     renderizarProductos();
     renderizarCarrito();
-});
 
     //Estilos
     document.body.style.backgroundImage = "linear-gradient(to bottom, #f3d8c7, #caaf9d)"
 
+    //SWEET ALERT LIBRERIA
+
+    Swal.fire({
+        title: '<strong>Bienvenidos a Nuestra Tienda Online</strong>',
+        showCloseButton: true,
+        showCancelButton: false,
+        focusConfirm: false,
+        confirmButtonText: '<i class="fa fa-thumbs-up"></i> Ir a Comprar!',
+        confirmButtonAriaLabel: 'Thumbs up, great!',
+    })
+});
