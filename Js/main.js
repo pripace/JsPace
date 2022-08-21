@@ -163,29 +163,30 @@ document.addEventListener('DOMContentLoaded', () => { //carga primero html
 
     //Evento para borrar un elemento del carrito
 
-    function borrarItemCarrito(e) {  //Antes de eliminar el producto, consulto al cliente si esta seguro
+    function borrarItemCarrito(e) { //Antes de eliminar el producto, consulto al cliente si esta seguro
         Swal.fire({
             title: 'Quieres eliminar este producto?',
             showDenyButton: true,
             showCancelButton: false,
             confirmButtonText: 'Conservar',
             denyButtonText: `Eliminar`,
-          }).then((result) => {
+        }).then((result) => {
             if (result.isConfirmed) {
-              Swal.fire('Buena elección!', '', 'success')
+                Swal.fire('Buena elección!', '', 'success')
             } else if (result.isDenied) {
-              Swal.fire('Puedes agregarlo nuevamente si lo deseas!', '', 'info');
-              const id = e.target.dataset.item;
-              // Borramos todos los productos
-              carrito = carrito.filter((carritoId) => {
-                  return carritoId !== id;
-              });
-              // volvemos a renderizar
-              renderizarCarrito();
-              // Actualizamos el LocalStorage
-              guardarCarritoEnLocalStorage();
+                Swal.fire('Puedes agregarlo nuevamente si lo deseas!', '', 'info');
+                const id = e.target.dataset.item;
+                // Borramos todos los productos
+                carrito = carrito.filter((carritoId) => {
+                    return carritoId !== id;
+                });
+                // volvemos a renderizar
+                renderizarCarrito();
+                // Actualizamos el LocalStorage
+                guardarCarritoEnLocalStorage();
             }
-          })}
+        })
+    }
 
     //Calcula el precio total teniendo en cuenta los productos repetidos
 
@@ -204,15 +205,33 @@ document.addEventListener('DOMContentLoaded', () => { //carga primero html
     // Vacia el carrito y vuelve a dibujarlo
 
     function vaciarCarrito() {
-        // Limpiamos los productos guardados
-        carrito = [];
-        // Renderizamos los cambios
-        renderizarCarrito();
-        // Borra LocalStorage
-        localStorage.removeItem('carrito');
-        localStorage.clear(); //borro del storage tambien
-
+        Swal.fire({
+            title: 'Quieres vaciar tu carrito?',
+            showDenyButton: true,
+            showCancelButton: false,
+            confirmButtonText: 'Conservar',
+            denyButtonText: `Eliminar`,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire('Buena compra!', '', 'success')
+            } else if (result.isDenied) {
+                Swal.fire('Te esperamos nuevamente!', '', 'info');
+                const id = e.target.dataset.item;
+                // Borramos todos los productos
+                carrito = carrito.filter((carritoId) => {
+                    return carritoId !== id;
+                });
+                // Limpiamos los productos guardados
+                carrito = [];
+                // Renderizamos los cambios
+                renderizarCarrito();
+                // Borra LocalStorage
+                localStorage.removeItem('carrito');
+                localStorage.clear(); //borro del storage tambien
+            }
+        })
     }
+
 
     function guardarCarritoEnLocalStorage() {
         localStorage.setItem('carrito', JSON.stringify(carrito));
@@ -225,7 +244,7 @@ document.addEventListener('DOMContentLoaded', () => { //carga primero html
     }
 
     //Confirmar Compra por mail
-    const realizarPedido = ({  //NO MUESTRA EL SEGUNDO MENSAJE
+    const realizarPedido = ({ //NO MUESTRA EL SEGUNDO MENSAJE
         value: email
     }) => {
         Swal.fire({
@@ -234,11 +253,11 @@ document.addEventListener('DOMContentLoaded', () => { //carga primero html
             inputLabel: 'Ingresa tu email',
             inputPlaceholder: 'email'
         })
-
         if (email) {
-            Swal.fire(`Finaliza tu compra ingresando a: ${email}`)
+            Swal.fire(`Finaliza tu compra ingresando a: ${email}`) //no muestra este
         }
     }
+
 
     // Eventos
     botonVaciar.addEventListener('click', vaciarCarrito);
@@ -254,12 +273,17 @@ document.addEventListener('DOMContentLoaded', () => { //carga primero html
 
     //SWEET ALERT Bienvenida
 
-    Swal.fire({
-        title: '<strong>Bienvenidos a Nuestra Tienda Online</strong>',
-        showCloseButton: true,
-        showCancelButton: false,
-        focusConfirm: false,
-        confirmButtonText: '<i class="fa fa-thumbs-up"></i> Ir a Comprar!',
-        confirmButtonAriaLabel: 'Thumbs up, great!',
-    })
+
+    setTimeout(() => {
+        Swal.fire({
+            title: '<strong>Bienvenidos a Nuestra Tienda Online</strong>',
+            showCloseButton: true,
+            showCancelButton: false,
+            focusConfirm: false,
+            confirmButtonText: '<i class="fa fa-thumbs-up"></i> Ir a Comprar!',
+            confirmButtonAriaLabel: 'Thumbs up, great!',
+        })
+    }, 1500);
+
+
 });
