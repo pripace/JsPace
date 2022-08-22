@@ -213,24 +213,24 @@ document.addEventListener('DOMContentLoaded', () => { //carga primero html
             denyButtonText: `Eliminar`,
         }).then((result) => {
             if (result.isConfirmed) {
-                Swal.fire('Buena compra!', '', 'success')
+                Swal.fire('Buena elección!', '', 'success')
             } else if (result.isDenied) {
                 Swal.fire('Te esperamos nuevamente!', '', 'info');
-                const id = e.target.dataset.item;
+
                 // Borramos todos los productos
-                carrito = carrito.filter((carritoId) => {
-                    return carritoId !== id;
-                });
+
                 // Limpiamos los productos guardados
                 carrito = [];
                 // Renderizamos los cambios
                 renderizarCarrito();
                 // Borra LocalStorage
                 localStorage.removeItem('carrito');
-                localStorage.clear(); //borro del storage tambien
+                localStorage.clear();
+                //borro del storage tambien
             }
         })
     }
+
 
 
     function guardarCarritoEnLocalStorage() {
