@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => { //carga primero html
 
     // Variables
-
     let carrito = [];
     const items = document.getElementById('items');
     const carritoLiteral = document.getElementById('carrito');
@@ -232,7 +231,6 @@ document.addEventListener('DOMContentLoaded', () => { //carga primero html
     }
 
 
-
     function guardarCarritoEnLocalStorage() {
         localStorage.setItem('carrito', JSON.stringify(carrito));
     }
@@ -284,6 +282,5 @@ document.addEventListener('DOMContentLoaded', () => { //carga primero html
             confirmButtonAriaLabel: 'Thumbs up, great!',
         })
     }, 1500);
-
 
 });

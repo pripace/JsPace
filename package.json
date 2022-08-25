@@ -1,0 +1,22 @@
+{
+  "name": "yoga2tienda",
+  "version": "1.0.0",
+  "description": "tienda Proyecto",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pripace/JsPace.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pripace/JsPace/issues"
+  },
+  "homepage": "https://github.com/pripace/JsPace#readme",
+  "dependencies": {
+    "sweet-alert": "^2.0.5"
+  }
+}
