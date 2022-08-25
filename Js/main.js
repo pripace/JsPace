@@ -7,56 +7,22 @@ document.addEventListener('DOMContentLoaded', () => { //carga primero html
     const precioFinal = document.getElementById('total');
     const botonVaciar = document.getElementById('boton-vaciar');
     const botonPedir = document.getElementById("boton-comprar");
+    document.body.style.backgroundImage = "linear-gradient(to bottom, #f5ebe0, #e3d5ca)";
+    /* const listaDeProductos = []; */
 
-    const listaDeProductos = [{
-            id: 1,
-            nombre: "Mat",
-            precio: 10000,
-            stock: 30,
-            img: "../imagenes/mat.jpg",
-        },
-        {
-            id: 2,
-            nombre: "Cubos",
-            precio: 2000,
-            stock: 15,
-            img: "../imagenes/cubo.jpg"
-        },
-        {
-            id: 3,
-            nombre: "Cintos",
-            precio: 1500,
-            stock: 15,
-            img: "../imagenes/cinto.jpg"
-        },
-        {
-            id: 4,
-            nombre: "Zafu",
-            precio: 3500,
-            stock: 10,
-            img: "../imagenes/zafu.jpg"
-        },
-        {
-            id: 5,
-            nombre: "Esfera",
-            precio: 8400,
-            stock: 2,
-            img: "../imagenes/esfera.jpg"
-        },
-        {
-            id: 6,
-            nombre: "Kit Relax",
-            precio: 2500,
-            stock: 3,
-            img: "../imagenes/kit.jpg"
-        }
-    ]
+    async function listaDeProductos() {
+        const URLJSON="/data.json"
+        const resp=await fetch("data.json")
+        const data= await resp.json()
+        listaDeProductos = data;
+        renderizarProductos();
+    }
 
-    // Funciones
+    listaDeProductos()
 
-    // Dibuja  los productos a partir de la base de datos
 
     function renderizarProductos() { //NODOS, CREACIONES
+        /* listaDeProductos */
         listaDeProductos.forEach((info) => {
             // Estructura
             const miNodo = document.createElement('div');
@@ -105,7 +71,7 @@ document.addEventListener('DOMContentLoaded', () => { //carga primero html
 
     function agregarProductoAlCarrito(e) {
         // Añadimos el Nodo alcarrito
-        carrito.push(e.target.getAttribute('marcador'))
+        carrito.push(e.target.getAttribute('marcador')) //ACA COMO LO LEERIA?
         // Actualizar carro
         renderizarCarrito();
         // Actualizo LocalStorage
@@ -125,6 +91,7 @@ document.addEventListener('DOMContentLoaded', () => { //carga primero html
     }
 
     //Muestro los productos guardados en el carrito
+
     function renderizarCarrito() {
         carritoLiteral.innerText = '';
         // Quitamos los duplicados con Operador avanzado Spread, es para que se muestre una vez el prod independiente de la cantidad (Un valor en un Set solo puede ocurrir una vez)
@@ -266,11 +233,7 @@ document.addEventListener('DOMContentLoaded', () => { //carga primero html
     renderizarProductos();
     renderizarCarrito();
 
-    //Estilos
-    document.body.style.backgroundImage = "linear-gradient(to bottom, #f5ebe0, #e3d5ca)"
-
     //SWEET ALERT Bienvenida
-
 
     setTimeout(() => {
         Swal.fire({
