@@ -8,7 +8,6 @@ document.addEventListener('DOMContentLoaded', () => { //carga primero html
     const botonVaciar = document.getElementById('boton-vaciar');
     const botonPedir = document.getElementById("boton-comprar");
     document.body.style.backgroundImage = "linear-gradient(to bottom, #f5ebe0, #e3d5ca)";
-    /* const listaDeProductos = []; */
 
     async function listaDeProductos() {
         const URLJSON="/data.json"
