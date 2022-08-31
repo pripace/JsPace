@@ -17,15 +17,22 @@ h3 {
     text-align: center;
     line-height: 30px;
     padding: 20px 0px 10px 0px;
-    color: #6d6875;
+    color: #5a5661;
 }
 
-.cart {
+ .cart {
     background-color: #f5ebe0;
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 8px;
+
+} 
+
+.card-body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 aside, button {

@@ -10,9 +10,9 @@ document.addEventListener('DOMContentLoaded', () => { //carga primero html
     document.body.style.backgroundImage = "linear-gradient(to bottom, #f5ebe0, #e3d5ca)";
 
     async function listaDeProductos() {
-        const URLJSON="/data.json"
-        const resp=await fetch("data.json")
-        const data= await resp.json()
+        const URLJSON = "/data.json"
+        const resp = await fetch("data.json")
+        const data = await resp.json()
         listaDeProductos = data;
         renderizarProductos();
     }
@@ -66,6 +66,19 @@ document.addEventListener('DOMContentLoaded', () => { //carga primero html
         });
     }
 
+
+    //SWEET ALERT Bienvenida
+    setTimeout(() => {
+        Swal.fire({
+            title: '<strong>Bienvenidos a Nuestra Tienda Online</strong>',
+            showCloseButton: true,
+            showCancelButton: false,
+            focusConfirm: false,
+            confirmButtonText: '<i class="fa fa-thumbs-up"></i> Ir a Comprar!',
+            confirmButtonAriaLabel: 'Thumbs up, great!',
+        })
+    }, 1200);
+
     // EVENTO para añadir un producto al carrito:
 
     function agregarProductoAlCarrito(e) {
@@ -84,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => { //carga primero html
             icon: 'success',
             title: 'Agregado al Carrito!',
             showConfirmButton: true,
-            timer: 1200,
+            timer: 1000,
             confirmButtonText: "Seguir Comprando"
         })
     }
@@ -208,18 +221,24 @@ document.addEventListener('DOMContentLoaded', () => { //carga primero html
     }
 
     //Confirmar Compra por mail
-    const realizarPedido = ({ //NO MUESTRA EL SEGUNDO MENSAJE
+    const realizarPedido = ({
         value: email
     }) => {
-        Swal.fire({
-            title: 'Te enviaremos el Link de pago',
-            input: 'email',
-            inputLabel: 'Ingresa tu email',
-            inputPlaceholder: 'email'
-        })
-        if (email) {
-            Swal.fire(`Finaliza tu compra ingresando a: ${email}`) //no muestra este
-        }
+        (async () => {
+
+            const {
+                value: email
+            } = await Swal.fire({
+                title: 'Te enviaremos el Link de pago',
+                input: 'email',
+                inputLabel: 'Ingresa tu email',
+                inputPlaceholder: 'Email'
+            })
+
+            if (email) {
+                Swal.fire(`Finaliza tu compra ingresando a: ${email}`)
+            }
+        })()
     }
 
 
@@ -231,18 +250,5 @@ document.addEventListener('DOMContentLoaded', () => { //carga primero html
     cargarCarritoDeLocalStorage();
     renderizarProductos();
     renderizarCarrito();
-
-    //SWEET ALERT Bienvenida
-
-    setTimeout(() => {
-        Swal.fire({
-            title: '<strong>Bienvenidos a Nuestra Tienda Online</strong>',
-            showCloseButton: true,
-            showCancelButton: false,
-            focusConfirm: false,
-            confirmButtonText: '<i class="fa fa-thumbs-up"></i> Ir a Comprar!',
-            confirmButtonAriaLabel: 'Thumbs up, great!',
-        })
-    }, 1500);
 
 });
